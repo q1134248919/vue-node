@@ -1,7 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
-
-let baseURL = 'http://www.ng-rc.com'
 
 axios.interceptors.request.use(config => {
   // loading
@@ -35,52 +32,6 @@ function errorState(response) {
   
 }
 
-function successState(res) {
-  console.log(res)
-}
-const httpServer = (opts, data) => {
+ 
 
-    let Public = { //公共参数
-    }
-
-    let httpDefaultOpts = { //http默认配置
-          method:opts.method,
-          baseURL,
-          url: opts.url,
-          timeout: 10000,
-          params:Object.assign(Public, data),
-          data:qs.stringify(Object.assign(Public, data)),
-          headers: opts.method=='get'?{
-            'X-Requested-With': 'XMLHttpRequest',
-            "Accept": "application/json",
-            "Content-Type": "application/json; charset=UTF-8"
-          }:{
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-          }
-    }
-
-    if(opts.method=='get'){
-      delete httpDefaultOpts.data
-    }else{
-      delete httpDefaultOpts.params
-    }
-    
-    let promise = new Promise(function(resolve, reject) {
-      axios(httpDefaultOpts).then(
-        (res) => {
-          successState(res)
-          resolve(res)
-        }
-      ).catch(
-        (response) => {
-          errorState(response)
-          reject(response)
-        }
-      )
-
-    })
-  return promise
-}
-
-export default httpServer
+export default axios

@@ -1,13 +1,15 @@
-const user = {
-	'getAccount': {
-		url: '/api/login/getAccount',
-		method: 'get'
-	},
-	'createAccount':{
-		url:'/api/login/createAccount',
-		method:'post'
-	}
-}
+import http from "../lib/http";
 
-const apiSetting = {...user}
-export default apiSetting
+export const getAccount=()=>{
+   return  http.get('/api/login/getAccount')
+}
+export const createAccount=(params)=>{
+	return  http.post('/api/login/createAccount',params)
+ }
+
+ export const checkAccount=(params)=>{
+	return  http.post('/api/login/checkAccount',params)
+ }
+ export const Loginin=(params)=>{
+	return  http.post('/api/login/loginin',params)
+ }

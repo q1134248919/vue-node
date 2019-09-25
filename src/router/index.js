@@ -1,17 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import MainPage from '@/page/MainPage'
+import Signup from '@/page/Signup'
+import Signin from '@/page/Signin'
 
 Vue.use(Router)
 
 export default new Router({
 	mode: 'history',
-	routes: [{
+	routes: [ {
 		path: '/',
-		redirect: '/Hello'
-	}, {
-		path: '/Hello',
-		name: 'Hello',
-		component: Hello
-	}]
+		name: 'MainPage',
+		component: MainPage
+	},
+	{
+		path: '/signup',
+		name: 'Signup',
+		component: Signup
+	},
+	{
+		path: '/signin',
+		name: 'Signin',
+		component: Signin
+	},
+]
 })

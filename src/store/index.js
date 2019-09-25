@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import *  as getters from './getters'
+import *  as  actions from './actions'
+import  mutations from './mutations'
 
 Vue.use(Vuex)
 
 const state = {
-  isLoading: false,
+  isLogin:localStorage.getItem("loginStatus")||false,
+  userInfo:JSON.parse(localStorage.getItem("userInfo"))||{},
 }
 
 export default new Vuex.Store({
   state,
-  mutations: {
-    UPDATE_LOADING(state, status) {
-      state.isLoading = status
-    }
-  }
+  getters,
+  actions,
+  mutations,
 })
