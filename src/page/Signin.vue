@@ -55,6 +55,7 @@ export default {
          this.$store.dispatch("getUserInfo",newdata);
           this.$store.dispatch("changeLoginStatus");
           this.$router.push('/');
+          console.log(1);
   },
   press(){
         if(this.account.length<6||this.account.length>13){
