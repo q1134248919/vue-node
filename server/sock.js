@@ -1,24 +1,36 @@
-var app = require("express")();
-var server = require("http").Server(app);
-var io = require("socket.io")(server);
+const WebSocket = require("ws");
 
-server.listen(80);
-// server.listen(3900);express4 no more need http
+const server = new WebSocket.Server({ port: 80 });
 
-io.on("connection", function(socket) {
-  console.log("1");
-  socket.on("join", name => {
-    socket.nickname = name;
-    console.log("joinkname:" + name);
-    // console.log(socket.broadcast.RequestHeaders);
-    socket.broadcast.emit("announcement", name + "join the chat");
-    // socket.emit('announcement',name+'join the chat');
-  });
-  console.log("someone connected");
-  socket.on("text", function(msg) {
-    console.log("text message:" + msg);
-    console.log("nickname:" + socket.nickname);
-    socket.broadcast.emit("text", socket.nickname, msg); //注意比较broadcast与不加broadcast的区别
-    // socket.emit('text',socket.nickname, msg);
+server.on("open", function open() {
+  console.log("connected");
+});
+
+server.on("close", function close() {
+  console.log("disconnected");
+});
+
+server.on("connection", function connection(ws, req) {
+  // 发送欢迎信息给客户端
+  ws.on("message", function incoming(message) {
+    // 广播消息给所有客户端
+    server.clients.forEach(function each(client) {
+      if (client.readyState === WebSocket.OPEN) {
+        const Nmessage = JSON.parse(message);
+        if (!Nmessage.msg) {
+          client.send(
+            JSON.stringify({
+              msg: "welcom" + Nmessage.name,
+              id: Math.random * 10000000 + 100
+            })
+          );
+        } else {
+          console.log("他这里");
+          client.send(
+            JSON.stringify({ ...Nmessage, id: Math.random() * 10000000 + 100 })
+          );
+        }
+      }
+    });
   });
 });
