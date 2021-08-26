@@ -50,7 +50,8 @@ export default {
       name: "",
       nameList: ["亮亮2", "路人甲4", "路人乙"],
       test: [],
-      test1:[],
+      test1: [],
+      test2: [],
     };
   },
 
